@@ -49,7 +49,7 @@ dependencyResolutionManagement {
 
 ```gradle
 dependencies {
-   implementation 'com.github.QmDeve:AndroidShortDrama:v1.0.0'
+   implementation 'com.github.QmDeve:AndroidShortDrama:v1.0.1'
 }
 ```
 
