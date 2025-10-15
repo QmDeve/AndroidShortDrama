@@ -27,8 +27,15 @@ public class QimaoShortDrama {
     private static final String SIGN_KEY = "d3dGiJc651gSQ8w1";
     private final OkHttpClient client = new OkHttpClient();
 
-    // 搜索短剧
-    public void searchDrama(String title, String page, OnResultListener listener) {
+
+    /**
+     * 七猫短剧 搜索短剧
+     *
+     * @param name     短剧名称
+     * @param page     页码
+     * @param listener 回调监听器
+     */
+    public void searchDrama(String name, String page, OnResultListener listener) {
         try {
             Map<String, String> headers = createDefaultHeaders();
             Map<String, String> params = new HashMap<>();
@@ -37,15 +44,12 @@ public class QimaoShortDrama {
             params.put("page", page);
             params.put("read_preference", "0");
             params.put("track_id", "481EC7F8-AEA4-4DD9-937E-1D10B9B5205A1756152280");
-            params.put("wd", title);
+            params.put("wd", name);
             String headerSign = generateSign(headers, SIGN_KEY);
             String paramSign = generateSign(params, SIGN_KEY);
-
             headers.put("sign", headerSign);
             params.put("sign", paramSign);
-
             String url = "https://api-store.qmplaylet.com/api/v1/playlet/search?" + buildParams(params);
-
             sendRequest(url, headers, null, listener);
         } catch (Exception e) {
             if (listener != null) {
@@ -55,7 +59,12 @@ public class QimaoShortDrama {
     }
 
 
-    // 推荐短剧
+    /**
+     * 七猫短剧 推荐短剧
+     *
+     * @param page     页码
+     * @param listener 回调监听器
+     */
     public void recommendDrama(String page, OnResultListener listener) {
         try {
             Map<String, String> headers = createDefaultHeaders();
@@ -64,15 +73,11 @@ public class QimaoShortDrama {
             params.put("playlet_privacy", "1");
             params.put("read_preference", "0");
             params.put("tag_id", "0");
-
             String headerSign = generateSign(headers, SIGN_KEY);
             String paramSign = generateSign(params, SIGN_KEY);
-
             headers.put("sign", headerSign);
             params.put("sign", paramSign);
-
             String url = "https://api-gw.wtzw.com/playlet/api/v2/list-by-tagId";
-
             sendRequest(url, headers, params, listener);
         } catch (Exception e) {
             if (listener != null) {
@@ -81,22 +86,24 @@ public class QimaoShortDrama {
         }
     }
 
-    // 获取短剧详情
+
+    /**
+     * 七猫短剧 获取短剧详情
+     *
+     * @param id       短剧id
+     * @param listener 回调监听器
+     */
     public void getDramaInfo(String id, OnResultListener listener) {
         try {
             Map<String, String> headers = createDefaultHeaders();
             Map<String, String> params = new HashMap<>();
             params.put("is_material", "0");
             params.put("playlet_id", id);
-
             String headerSign = generateSign(headers, SIGN_KEY);
             String paramSign = generateSign(params, SIGN_KEY);
-
             headers.put("sign", headerSign);
             params.put("sign", paramSign);
-
             String url = "https://api-read.qmplaylet.com/player/api/v1/playlet/info?" + buildParams(params);
-
             sendRequest(url, headers, null, listener);
         } catch (Exception e) {
             if (listener != null) {

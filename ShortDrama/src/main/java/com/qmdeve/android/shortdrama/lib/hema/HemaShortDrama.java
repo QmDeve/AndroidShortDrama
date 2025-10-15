@@ -51,27 +51,55 @@ public class HemaShortDrama {
         void onFailure(String errorMsg);
     }
 
-    // 短剧搜索
+
+    /**
+     * 河马短剧 短剧搜索
+     * @param name 短剧
+     * @param listener 回调监听器
+     */
     public void searchListDrama(String name, OnResultListener<String> listener) {
         executorService.execute(() -> getSearchListDrama(name, listener));
     }
 
-    // 获取播放链接
+
+    /**
+     * 河马短剧 获取播放链接
+     * @param bookId 短剧ID
+     * @param chapterId 剧集ID
+     * @param chapterIds 剧集ID列表
+     * @param listener 回调监听器
+     */
     public void playListDrama(String bookId, String chapterId, ArrayList<String> chapterIds, OnResultListener<String> listener) {
         executorService.execute(() -> getPlayListDrama(bookId, chapterId, chapterIds, listener));
     }
 
-    // 获取剧集列表
+
+    /**
+     * 河马短剧 获取剧集列表
+     * @param id 短剧ID
+     * @param listener 回调监听器
+     */
     public void episodeListDrama(String id, OnResultListener<String> listener) {
         executorService.execute(() -> getEpisodeListDrama(id, listener));
     }
 
-    // 获取分类推荐列表
+
+    /**
+     * 河马短剧 获取分类推荐列表
+     * @param id 短剧ID
+     * @param name 分类名称
+     * @param page 页码
+     * @param listener 回调监听器
+     */
     public void typeListDrama(String id, String name, String page, OnResultListener<String> listener) {
         executorService.execute(() -> getTypeListDrama(id, name, page, listener));
     }
 
-    // 获取分类标签(可通过此方法获取所有分类的id)
+
+    /**
+     * 河马短剧 获取分类标签(通过此方法获取所有分类的id)
+     * @param listener 回调监听器
+     */
     public void typeDrama(OnResultListener<String> listener) {
         executorService.execute(() -> getTypeDrama(listener));
     }

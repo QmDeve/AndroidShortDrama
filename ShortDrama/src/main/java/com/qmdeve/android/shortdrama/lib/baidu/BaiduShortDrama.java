@@ -1,7 +1,6 @@
 package com.qmdeve.android.shortdrama.lib.baidu;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +16,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class BaiduShortDrama {
-    private static final String TAG = "BaiduShortDrama";
     private static final OkHttpClient client = new OkHttpClient();
     private static final Gson gson = new Gson();
 
@@ -26,17 +24,33 @@ public class BaiduShortDrama {
         void onFailure(String errorMsg);
     }
 
-    // 搜索短剧
+
+    /**
+     * 百度短剧 搜索短剧
+     * @param name 短剧名
+     * @param page 页码
+     * @param listener 回调监听器
+     */
     public void searchDrama(String name, int page, OnResultListener<SearchResponse> listener) {
         new SearchTask(listener).execute(name, String.valueOf(page));
     }
 
-    // 获取集数列表
+
+    /**
+     * 百度短剧 获取集数列表
+     * @param id 短剧ID
+     * @param listener 回调监听器
+     */
     public void getEpisodeList(String id, OnResultListener<EpisodeListResponse> listener) {
         new EpisodeListTask(listener).execute(id);
     }
 
-    // 获取视频详情
+
+    /**
+     * 百度短剧 获取剧集详情
+     * @param videoId 剧集视频ID
+     * @param listener 回调监听器
+     */
     public void getVideoDetail(String videoId, OnResultListener<VideoDetailResponse> listener) {
         new VideoDetailTask(listener).execute(videoId);
     }
@@ -91,7 +105,7 @@ public class BaiduShortDrama {
                     return null;
                 }
             } catch (IOException e) {
-                Log.e(TAG, "搜索失败: " + e.getMessage());
+                listener.onFailure("搜索失败: ");
                 return null;
             }
         }
@@ -139,7 +153,7 @@ public class BaiduShortDrama {
                     return null;
                 }
             } catch (IOException e) {
-                Log.e(TAG, "获取集数列表失败: " + e.getMessage());
+                listener.onFailure("获取集数列表失败: " + e.getMessage());
                 return null;
             }
         }
@@ -238,7 +252,7 @@ public class BaiduShortDrama {
                     return null;
                 }
             } catch (IOException e) {
-                Log.e(TAG, "获取视频详情失败: " + e.getMessage());
+                listener.onFailure("获取视频详情失败: " + e.getMessage());
                 return null;
             }
         }
